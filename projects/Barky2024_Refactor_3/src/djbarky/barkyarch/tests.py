@@ -14,6 +14,9 @@ from barkyarch.services.commands import (
 
 
 class TestCommands(TestCase):
+    """
+    This is to test this program arch
+    """
     def setUp(self):
         right_now = localtime().date()
 
@@ -61,7 +64,7 @@ class TestCommands(TestCase):
         
         # Attempt to add a bookmark with missing required data
         invalid_bookmark = DomainBookmark(id=3, title="Invalid Bookmark", url="", notes="")
-        with self.assertRaises(Exception):  # Adjust the expected exception based on error handling
+        with self.assertRaises(Exception):
             add_command.execute(invalid_bookmark)
         self.assertEqual(Bookmark.objects.count(), 0)  # No bookmark should be added
 

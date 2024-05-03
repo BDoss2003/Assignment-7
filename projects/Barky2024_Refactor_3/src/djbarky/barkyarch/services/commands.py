@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 import pytz
 
-import requests
+import requests #Do we even need this anymore??
 from django.db import transaction
 
 from barkyapi.models import Bookmark
