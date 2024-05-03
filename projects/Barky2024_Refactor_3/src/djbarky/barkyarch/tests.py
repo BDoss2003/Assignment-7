@@ -44,3 +44,23 @@ class TestCommands(TestCase):
 
         # that object is the same as the one we inserted
         self.assertEqual(Bookmark.objects.get(id=1).url, self.domain_bookmark_1.url)
+    
+    def test_command_add_duplicate(self):
+        add_command = AddBookmarkCommand()
+        
+        # Add the first bookmark
+        add_command.execute(self.domain_bookmark_1)
+        self.assertEqual(Bookmark.objects.count(), 1)
+        
+        # Attempt to add the same bookmark again (duplicate)
+        add_command.execute(self.domain_bookmark_1)
+        self.assertEqual(Bookmark.objects.count(), 1)  # Should still be 1 (no duplicates)
+        
+    def test_command_add_invalid_data(self):
+        add_command = AddBookmarkCommand()
+        
+        # Attempt to add a bookmark with missing required data
+        invalid_bookmark = DomainBookmark(id=3, title="Invalid Bookmark", url="", notes="")
+        with self.assertRaises(Exception):  # Adjust the expected exception based on error handling
+            add_command.execute(invalid_bookmark)
+        self.assertEqual(Bookmark.objects.count(), 0)  # No bookmark should be added
