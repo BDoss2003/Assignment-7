@@ -1,21 +1,5 @@
 import django
 from django.conf import settings
-
-from django.utils.timezone import localtime, now, get_current_timezone
-from django.db import transaction
-from django.test import TestCase
-from django.urls import reverse
-from django.utils.timezone import localtime
-
-from barkyapi.models import Bookmark
-from barkyarch.domain.model import DomainBookmark
-from barkyarch.services.commands import (
-    AddBookmarkCommand,
-    ListBookmarksCommand,
-    DeleteBookmarkCommand,
-    EditBookmarkCommand,
-)
-
 from django.utils import timezone
 from datetime import datetime
 
@@ -34,6 +18,21 @@ settings.configure(
 
 # Call django.setup() to initialize Django internals
 django.setup()
+
+from django.utils.timezone import localtime, now, get_current_timezone
+from django.db import transaction
+from django.test import TestCase
+from django.urls import reverse
+from django.utils.timezone import localtime
+
+from barkyapi.models import Bookmark
+from barkyarch.domain.model import DomainBookmark
+from barkyarch.services.commands import (
+    AddBookmarkCommand,
+    ListBookmarksCommand,
+    DeleteBookmarkCommand,
+    EditBookmarkCommand,
+)
 
 class TestCommands(TestCase):
     """
