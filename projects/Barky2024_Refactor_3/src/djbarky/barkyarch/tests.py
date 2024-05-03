@@ -1,3 +1,7 @@
+import django
+from django.conf import settings
+
+from django.utils.timezone import localtime, now, get_current_timezone
 from django.db import transaction
 from django.test import TestCase
 from django.urls import reverse
@@ -12,13 +16,32 @@ from barkyarch.services.commands import (
     EditBookmarkCommand,
 )
 
+from django.utils import timezone
+from datetime import datetime
+
+settings.configure(
+    DEBUG=True,
+    INSTALLED_APPS=[
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        # Add your project's apps here
+        'barkyapi',
+        # Other installed apps
+    ],
+    
+)
+
+# Call django.setup() to initialize Django internals
+django.setup()
 
 class TestCommands(TestCase):
     """
     This is to test this program arch
     """
     def setUp(self):
-        right_now = localtime().date()
+        right_now = datetime.now()
+
 
         self.domain_bookmark_1 = DomainBookmark(
             id=1,
@@ -35,6 +58,7 @@ class TestCommands(TestCase):
             notes="Test notes 2",
             date_added=right_now,
         )
+
     #BOOKMARK tests
     def test_command_add(self):
         add_command = AddBookmarkCommand()
